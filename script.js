@@ -1,3 +1,9 @@
+const display = document.querySelector('.display');
+const buttons = document.querySelectorAll('.numberButtons');
+const operators = document.querySelectorAll('.operatorButtons');
+const ac = document.querySelector('#AC');
+const del = document.querySelector('#Del');
+
 let input1;
 let input2;
 let operator;
@@ -39,3 +45,32 @@ function operate(input1, input2, operator) {
     }
 }
 
+
+
+////////////////////////////////////////////////////////
+/****************Event Listeners***********************/
+////////////////////////////////////////////////////////
+
+//Number display
+buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        display.textContent += button.textContent;
+    });
+});
+
+//Operator display
+operators.forEach(operator => {
+    operator.addEventListener('click', () => {
+        display.textContent += operator.textContent;
+    });
+});
+
+//For AC buttons
+ac.addEventListener('click', () => {
+    display.textContent = '';
+});
+
+//For AC buttons
+del.addEventListener('click', () => {
+    display.textContent = display.textContent.slice(0,-1);
+});
