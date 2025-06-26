@@ -3,74 +3,135 @@ const buttons = document.querySelectorAll('.numberButtons');
 const operators = document.querySelectorAll('.operatorButtons');
 const ac = document.querySelector('#AC');
 const del = document.querySelector('#Del');
+const equal = document.querySelector('#equal');
 
-let input1;
-let input2;
-let operator;
+let input1 = '';
+let input2 = '';
+let operator = '';
+let resultShown = false;
 
 ////////////////////////////////////////////////////////
-/**********************Functions***********************/
+// Math Functions
 ////////////////////////////////////////////////////////
 
-function add(num1, num2) {
-    return num1 + num2;
-};
+function add(a, b) {
+    return a + b;
+}
 
-function subtract(num1, num2) {
-    return num1 - num2;
-};
+function subtract(a, b) {
+    return a - b;
+}
 
-function multiply(num1, num2) {
-    return num1 * num2;
-};
+function multiply(a, b) {
+    return a * b;
+}
 
-function divide(num1, num2) {
-    return num1 / num2;
-};
+function divide(a, b) {
+    if (b === 0) return "Nope.";
+    return a / b;
+}
 
-function operate(input1, input2, operator) {
+function operate(a, b, operator) {
+    a = parseFloat(a);
+    b = parseFloat(b);
+
     switch (operator) {
-        case "+":
-            return add(input1, input2);
-            break;
-        case "-":
-            return subtract(input1, input2);
-            break;
-        case "*":
-            return multiply(input1, input2);
-            break;
-        case "/":
-            return add(input1, input2);
-            break;
+        case '+': return roundResult(add(a, b));
+        case '-': return roundResult(subtract(a, b));
+        case '*': return roundResult(multiply(a, b));
+        case '/': return divide(a, b);
+        default: return b;
     }
 }
 
-
+function roundResult(num) {
+    return Math.round(num * 1000) / 1000;
+}
 
 ////////////////////////////////////////////////////////
-/****************Event Listeners***********************/
+// Event Listeners
 ////////////////////////////////////////////////////////
 
-//Number display
+// Digit & Decimal Input
 buttons.forEach(button => {
     button.addEventListener('click', () => {
-        display.textContent += button.textContent;
+        const btn = button.textContent;
+
+        if (resultShown) {
+            display.textContent = '';
+            resultShown = false;
+        }
+
+        // Prevent multiple dots
+        if (btn === '.' && display.textContent.includes('.')) return;
+
+        // Prevent exceeding 12 characters
+        if (display.textContent.length >= 12) return;
+
+        // Prevent multiple leading zeros like "0000"
+        if (btn === '0' && display.textContent === '0') return;
+
+        // Replace leading "0" with non-zero digit (e.g. "04" becomes "4")
+        if (display.textContent === '0' && btn !== '.' && btn !== '0') {
+            display.textContent = btn;
+            return;
+        }
+
+        display.textContent += btn;
     });
 });
 
-//Operator display
-operators.forEach(operator => {
-    operator.addEventListener('click', () => {
-        display.textContent += operator.textContent;
+
+
+// Operator Input
+operators.forEach(op => {
+    op.addEventListener('click', () => {
+        // If already has input1 and operator, evaluate first
+        if (input1 !== '' && operator !== '' && !resultShown) {
+            input2 = display.textContent;
+            const result = operate(input1, input2, operator);
+            display.textContent = result;
+            input1 = result === "Nope." ? '' : result;
+            input2 = '';
+            resultShown = true;
+        } else {
+            input1 = display.textContent;
+        }
+
+        operator = op.textContent;
+        resultShown = true;
     });
 });
 
-//For AC buttons
+// Equal Button
+equal.addEventListener('click', () => {
+    if (input1 === '' || operator === '') return;
+
+    input2 = display.textContent;
+    const result = operate(input1, input2, operator);
+
+    display.textContent = result;
+    input1 = result === "Nope." ? '' : result;
+    input2 = '';
+    operator = '';
+    resultShown = true;
+});
+
+// All Clear
 ac.addEventListener('click', () => {
     display.textContent = '';
+    input1 = '';
+    input2 = '';
+    operator = '';
+    resultShown = false;
 });
 
-//For AC buttons
+// Delete
 del.addEventListener('click', () => {
-    display.textContent = display.textContent.slice(0,-1);
+    if (resultShown) {
+        display.textContent = '';
+        resultShown = false;
+    } else {
+        display.textContent = display.textContent.slice(0, -1);
+    }
 });

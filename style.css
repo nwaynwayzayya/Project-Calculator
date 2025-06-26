@@ -1,21 +1,68 @@
-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.buttons {
-    flex-direction: column;
-}
-
-.container {
-    flex: 1;
-}
-
-div {
-    display: flex;
-}
-
+/* Reset basic layout */
 html, body {
-    height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
 }
+
+/* FIXED FOOTER at bottom */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  z-index: 1000;
+}
+
+/* Add padding to avoid calculator overlapping footer */
+.container {
+  min-height: 100%;         /* ensure container stretches */
+  padding-bottom: 4rem;     /* enough space so footer doesn't cover it */
+  
+  /* ✅ Center the calculator div */
+  display: flex;
+  justify-content: center;  /* center horizontally */
+  align-items: center;      /* center vertically */
+}
+
+/* Center the calculator block itself */
+.calculator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 500px;
+  background: #f4f4f4;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+.display {
+  background-color: black;
+  color: white;
+  width: 100px;
+  height: 100px;
+}
+
+/* Just to make sure .buttons stacks correctly */
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.rowOne {
+    display: flex;
+}
+
