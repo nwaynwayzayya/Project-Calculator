@@ -1,68 +1,126 @@
-/* Reset basic layout */
-html, body {
+/* Reset some defaults */
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Segoe UI', sans-serif;
 }
 
-/* FIXED FOOTER at bottom */
-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #333;
+body {
+  background: linear-gradient(to right, #1c1c1c, #2c3e50);
   color: white;
-  text-align: center;
-  padding: 1rem;
-  z-index: 1000;
-}
-
-/* Add padding to avoid calculator overlapping footer */
-.container {
-  min-height: 100%;         /* ensure container stretches */
-  padding-bottom: 4rem;     /* enough space so footer doesn't cover it */
-  
-  /* ✅ Center the calculator div */
-  display: flex;
-  justify-content: center;  /* center horizontally */
-  align-items: center;      /* center vertically */
-}
-
-/* Center the calculator block itself */
-.calculator {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+h1 {
+  margin-top: 20px;
+  font-size: 2rem;
+  color: #f1c40f;
+  text-shadow: 1px 1px 3px black;
+}
+
+.container {
+  margin-top: 2rem;
+  display: flex;
   justify-content: center;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 400px;
-  height: 500px;
-  background: #f4f4f4;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  z-index: 1000;
+  align-items: center;
+  height: calc(100vh - 12rem);
+}
+
+.calculator {
+  background-color: #222;
+  padding: 1rem;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  width: 320px;
 }
 
 .display {
-  background-color: black;
-  color: white;
-  width: 100px;
-  height: 100px;
+  background-color: #111;
+  color: #0f0;
+  font-size: 2.2rem;
+  text-align: right;
+  padding: 1rem;
+  border-radius: 10px;
+  min-height: 100px;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+  word-wrap: break-word;
 }
 
-/* Just to make sure .buttons stacks correctly */
 .buttons {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.rowOne {
-    display: flex;
+.buttons > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
 }
 
+.word {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #ccc;
+  font-size: 1.1rem;
+}
+
+button {
+  flex: 1;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.3rem;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  background-color: #555;
+}
+
+button:active {
+  background-color: #777;
+}
+
+.operatorButtons {
+  background-color: #e67e22;
+}
+
+.operatorButtons:hover {
+  background-color: #d35400;
+}
+
+#equal {
+  background-color: #27ae60;
+}
+
+#equal:hover {
+  background-color: #1e8449;
+}
+
+#AC, #Del {
+  background-color: #c0392b;
+}
+
+#AC:hover, #Del:hover {
+  background-color: #922b21;
+}
+
+footer {
+  margin-top: auto;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #aaa;
+}
